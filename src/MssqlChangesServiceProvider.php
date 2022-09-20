@@ -2,9 +2,9 @@
 
 namespace Patabugen\MssqlChanges;
 
+use Patabugen\MssqlChanges\Commands\MssqlChangesCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Patabugen\MssqlChanges\Commands\MssqlChangesCommand;
 
 class MssqlChangesServiceProvider extends PackageServiceProvider
 {
