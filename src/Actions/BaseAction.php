@@ -9,6 +9,6 @@ abstract class BaseAction
 
     protected function connection()
     {
-        return DB::connection();
+        return DB::connection(config('mssql-changes.connection', null));
     }
 }
