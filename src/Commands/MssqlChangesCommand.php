@@ -6,9 +6,9 @@ use Illuminate\Console\Command;
 
 class MssqlChangesCommand extends Command
 {
-    public $signature = 'mssqlchanges';
+    public $signature = 'mssql-changes';
 
-    public $description = 'My command';
+    public $description = 'Does not do anything, yet';
 
     public function handle(): int
     {
