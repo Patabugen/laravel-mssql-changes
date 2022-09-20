@@ -26,6 +26,15 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app)
     {
+<<<<<<< Updated upstream
+        // config()->set('database.default', 'testing');
+=======
         config()->set('database.default', 'testing');
+
+        /*
+        $migration = include __DIR__.'/../database/migrations/create_laravel-mssql-changes_table.php.stub';
+        $migration->up();
+        */
+>>>>>>> Stashed changes
     }
 }

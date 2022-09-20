@@ -15,36 +15,15 @@ You can install the package via composer:
 composer require patabugen/laravel-mssql-changes
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="mssql-changes-migrations"
-php artisan migrate
-```
-
 You can publish the config file with:
 
 ```bash
 php artisan vendor:publish --tag="mssql-changes-config"
 ```
 
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="mssql-changes-views"
-```
-
 ## Usage
 
 ```php
-
 ```
 
 ## Testing
