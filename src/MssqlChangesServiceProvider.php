@@ -2,8 +2,8 @@
 
 namespace Patabugen\MssqlChanges;
 
-use Patabugen\MssqlChanges\Actions\ListDatabases;
 use Patabugen\MssqlChanges\Actions\ListChanges;
+use Patabugen\MssqlChanges\Actions\ListDatabases;
 use Patabugen\MssqlChanges\Actions\ListTables;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;

@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'connection' => env('MSSQL_CHANGES_CONNECTION', 'default')
+    'connection' => env('MSSQL_CHANGES_CONNECTION', 'default'),
 ];

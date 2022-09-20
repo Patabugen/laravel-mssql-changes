@@ -5,7 +5,6 @@ namespace Patabugen\MssqlChanges\Actions;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsCommand;
 use Patabugen\MssqlChanges\Database;
 
 class ListDatabases extends BaseAction
@@ -20,7 +19,7 @@ class ListDatabases extends BaseAction
             ->table('sys.change_tracking_databases')
             ->selectRaw('DB_NAME(database_id) AS name, retention_period_units, retention_period_units_desc')
             ->get()
-            ->map(function($item){
+            ->map(function ($item) {
                 return new Database(
                     $item->name, $item->retention_period_units, $item->retention_period_units_desc
                 );

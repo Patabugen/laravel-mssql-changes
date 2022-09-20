@@ -8,7 +8,9 @@ use Illuminate\Support\Str;
 class Database implements Arrayable
 {
     public string $name;
+
     public int $retentionPeriodUnits;
+
     public string $retentionPeriodUnitsDesc;
 
     public function __construct(
@@ -25,10 +27,9 @@ class Database implements Arrayable
     {
         return [
             'Name' => $this->name,
-            'Retention Period'
-                => $this->retentionPeriodUnits
-                    . ' '
-                    . Str::of($this->retentionPeriodUnitsDesc)->lower()->title(),
+            'Retention Period' => $this->retentionPeriodUnits
+                    .' '
+                    .Str::of($this->retentionPeriodUnitsDesc)->lower()->title(),
         ];
     }
 }

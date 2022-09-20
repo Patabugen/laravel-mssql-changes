@@ -10,20 +10,21 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class ListChanges
 {
     use AsAction;
+
     public string $commandSignature = 'mssql:list-changes';
 
     public function handle(): Collection
     {
         $allChanges = new Collection;
         $tables = $this->getTables();
-        $tables->each(function($tableName) use ($allChanges) {
+        $tables->each(function ($tableName) use ($allChanges) {
             logger('Searching for differences in '.$tableName);
             $changes = $this->getChanges($tableName);
             $allChanges[$tableName] = $changes;
         });
+
         return $allChanges;
     }
-
 
     private function getChanges(string $tableName): Collection
     {
@@ -44,7 +45,7 @@ class ListChanges
 
     private function connection()
     {
-        return DB::connection("enterprise_mrm");
+        return DB::connection('enterprise_mrm');
     }
 
     public function asCommand(Command $command): void
