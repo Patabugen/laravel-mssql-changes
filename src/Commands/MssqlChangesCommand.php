@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 
 class MssqlChangesCommand extends Command
 {
-    public $signature = 'laravel-mssql-changes';
+    public $signature = 'mssql-changes';
 
     public $description = 'My command';
 

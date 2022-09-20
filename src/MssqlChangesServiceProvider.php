@@ -2,9 +2,9 @@
 
 namespace Patabugen\MssqlChanges;
 
+use Patabugen\MssqlChanges\Commands\MssqlChangesCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Patabugen\MssqlChanges\Commands\MssqlChangesCommand;
 
 class MssqlChangesServiceProvider extends PackageServiceProvider
 {
@@ -16,10 +16,8 @@ class MssqlChangesServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('laravel-mssql-changes')
+            ->name('mssql-changes')
             ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_laravel-mssql-changes_table')
             ->hasCommand(MssqlChangesCommand::class);
     }
 }
