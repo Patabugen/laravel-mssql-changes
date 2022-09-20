@@ -8,11 +8,8 @@ class ListDatabasesTest extends TestCase
 {
     public function test_we_can_list_databases_with_tracking_enabled()
     {
-        $expectedTables = [
-
-        ];
-
+        // TODO: Create these databases/tables in the test.
         $databases = ListDatabases::run();
-        $this->assertCount(135, $databases);
+        $this->assertCount(1, $databases);
     }
 }
