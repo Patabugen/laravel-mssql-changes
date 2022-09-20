@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Patabugen\MssqlChanges\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class MssqlChangesCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'mssqlchanges';
 
     public $description = 'My command';
 
