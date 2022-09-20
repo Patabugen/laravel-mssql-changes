@@ -1,4 +1,5 @@
 {
+<<<<<<< Updated upstream
     "name": "patabugen/mssqlchanges",
     "description": "A package to manage Change Tracking and view changes in Microsoft's SQL Server (2008)",
     "keywords": [
@@ -7,6 +8,16 @@
         "mssqlchanges"
     ],
     "homepage": "https://github.com/patabugen/mssqlchanges",
+=======
+    "name": "patabugen/laravel-mssql-changes",
+    "description": "A package to manage Change Tracking and view changes in Microsoft's SQL Server (2008) from Laravel",
+    "keywords": [
+        "Patabugen",
+        "laravel",
+        "laravel-mssql-changes"
+    ],
+    "homepage": "https://github.com/patabugen/laravel-mssql-changes",
+>>>>>>> Stashed changes
     "license": "MIT",
     "authors": [
         {
@@ -53,8 +64,13 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
+<<<<<<< Updated upstream
             "pestphp/pest-plugin": true,
             "phpstan/extension-installer": true
+=======
+            "phpstan/extension-installer": true,
+            "pestphp/pest-plugin": true
+>>>>>>> Stashed changes
         }
     },
     "extra": {
