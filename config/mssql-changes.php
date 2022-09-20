@@ -1,6 +1,5 @@
 <?php
 
-// config for Patabugen/MssqlChanges
 return [
-
+    'connection' => 'default'
 ];
