@@ -4,12 +4,9 @@ namespace Patabugen\MssqlChanges\Actions;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use Lorisleiva\Actions\Concerns\AsCommand;
 
 class ListTables extends BaseAction
 {
-    use AsCommand;
-
     public string $commandSignature = 'mssql:list-tables';
 
     public function handle(): Collection

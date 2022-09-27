@@ -21,18 +21,37 @@ You can publish the config file with:
 php artisan vendor:publish --tag="mssql-changes-config"
 ```
 
-## Usage
+## Usage - PHP
+```php
+    $sqlChanges = Patabugen\SqlChanges::create(config('db.sqlsrv'));
+    foreach ($sqlChanges->getTables() as $table) {
+        echo "Table {$table->name} has {$table->getChanges()->count()} Changes";
+        foreach ($table->getChanges() as $change) {
+            echo "In row {$change->pk} column {$change->columnName} changed to {$change->newValue}";
+        }
+    }
+```
+
+## Usage - Artisan
 
 __Note: This package is in it's early stages, these commands may not work yet.__
 
 ### Lists all changes in all tables.
-`artisan mssql:show-changes`
+`artisan mssql:list-changes`
 
 ### Forget all changes
 `artisan mssql:forget-changes`
 
 ### Filter Changes by table
-`artisan mssql:show-changes --table=tableName --table=anotherTable`
+`artisan mssql:list-changes --table=tableName --table=anotherTable`
+
+## Todo
+I'd like to add these commands or features:
+
+ - Creating a test database for the tests
+ - `artisan mssql:enable-change-tracking`
+ - `artisan mssql:disable-change-tracking`
+ - `artisan mssql:list-status` // Show the status of databases/tables
 
 ## Testing
 

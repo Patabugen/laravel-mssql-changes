@@ -7,10 +7,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class ListChanges
+class ListChanges extends BaseAction
 {
-    use AsAction;
-
     public string $commandSignature = 'mssql:list-changes';
 
     public function handle(): Collection

@@ -4,11 +4,11 @@ namespace Patabugen\MssqlChanges\Commands;
 
 use Illuminate\Console\Command;
 
-class MssqlChangesCommand extends Command
+class ListChanges extends BaseCommand
 {
-    public $signature = 'mssql:show-changes';
+    public $signature = 'mssql:list-changes';
 
-    public $description = 'Show changes from any tables with Change Tracking in MSSQL';
+    public $description = 'List changes from any tables with Change Tracking in MSSQL';
 
     public function handle(): int
     {

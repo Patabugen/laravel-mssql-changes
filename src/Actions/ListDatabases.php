@@ -4,13 +4,10 @@ namespace Patabugen\MssqlChanges\Actions;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use Lorisleiva\Actions\Concerns\AsAction;
 use Patabugen\MssqlChanges\Database;
 
 class ListDatabases extends BaseAction
 {
-    use AsAction;
-
     public string $commandSignature = 'mssql:list-databases';
 
     public function handle(): Collection

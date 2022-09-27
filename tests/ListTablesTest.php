@@ -2,14 +2,17 @@
 
 namespace Patabugen\MssqlChanges\Tests;
 
-use Patabugen\MssqlChanges\Actions\ListDatabases;
+use Illuminate\Support\Facades\DB;
+use Patabugen\MssqlChanges\Actions\ListTables;
+use Patabugen\MssqlChanges\Database;
 
-class ListDatabasesTest extends TestCase
+class ListTablesTest extends TestCase
 {
     public function test_we_can_list_databases_with_tracking_enabled()
     {
         // TODO: Create these databases/tables in the test.
-        $databases = ListDatabases::run();
+        $database = Database::create();
+        $databases = ListTables::run();
         $this->assertCount(1, $databases);
     }
 }
