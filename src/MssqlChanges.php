@@ -3,12 +3,11 @@
 namespace Patabugen\MssqlChanges;
 
 use Illuminate\Support\Facades\DB;
-use Patabugen\MssqlChanges\Database;
-use Patabugen\MssqlChanges\Table;
 
 class MssqlChanges
 {
     private $dbConnection;
+
     private Database $database;
 
     public function __construct()

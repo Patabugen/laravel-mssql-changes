@@ -2,11 +2,8 @@
 
 namespace Patabugen\MssqlChanges\Tests;
 
-use Illuminate\Support\Facades\DB;
 use Patabugen\MssqlChanges\Actions\ListTableChanges;
-use Patabugen\MssqlChanges\Actions\ListTables;
 use Patabugen\MssqlChanges\Change;
-use Patabugen\MssqlChanges\Database;
 use Patabugen\MssqlChanges\Table;
 
 class ListTableChangesTest extends TestCase

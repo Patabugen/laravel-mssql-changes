@@ -2,12 +2,8 @@
 
 namespace  Patabugen\MssqlChanges\Actions;
 
-use Illuminate\Console\Command;
-use Illuminate\Database\ConnectionInterface;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Lorisleiva\Actions\Concerns\AsAction;
 use Patabugen\MssqlChanges\Change;
 use Patabugen\MssqlChanges\Table;
 
@@ -21,7 +17,7 @@ class ListTableChanges extends BaseAction
 
         $sql = Str::of($this->connection()
             ->table($table->name, 'c')
-            ->select([ '*' ])
+            ->select(['*'])
             ->crossJoin('CROSS-APPLY-PLACEHOLDER')
             ->whereNotNull('CT.SYS_CHANGE_VERSION')
             ->orderBy('CT.SYS_CHANGE_VERSION')
@@ -37,7 +33,7 @@ class ListTableChanges extends BaseAction
                 connection: $this->connection(),
                 primaryKey: $table->getPrimaryKeyColumn(),
                 table: $table,
-                columnName: "unknown",
+                columnName: 'unknown',
             );
         });
         ray($changes);

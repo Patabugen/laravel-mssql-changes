@@ -3,14 +3,15 @@
 namespace Patabugen\MssqlChanges;
 
 use Illuminate\Database\ConnectionInterface;
-use Illuminate\Support\Collection;
-use Patabugen\MssqlChanges\Actions\ListTables;
 
 class Change
 {
     private ConnectionInterface $connection;
+
     private string $primaryKey;
+
     private string $columnName;
+
     private Table $table;
 
     public function __construct(
@@ -30,7 +31,7 @@ class Change
         return [
             'Table' => $this->table->name,
             'Primary Key' => $this->primaryKey,
-            'Column Name' => $this->columnName
+            'Column Name' => $this->columnName,
         ];
     }
 }
