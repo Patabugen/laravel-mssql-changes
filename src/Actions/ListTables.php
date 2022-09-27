@@ -9,6 +9,7 @@ use Patabugen\MssqlChanges\Table;
 class ListTables extends BaseAction
 {
     public string $commandSignature = 'mssql:list-tables';
+    public array $tableFilter = [];
 
     /**
      * Returns a collection of Table objects for any table which has Change Tracking
@@ -17,22 +18,28 @@ class ListTables extends BaseAction
      */
     public function handle(): Collection
     {
-        $tables = $this->connection()
+        $query = $this->connection()
             ->table('sys.change_tracking_tables')
             ->select('*')
             ->join('sys.tables', 'sys.change_tracking_tables.object_id', 'sys.tables.object_id')
-            ->get()
-            ->mapWithKeys(function($item){
-                return [
-                    $item->name => new Table(
-                        $this->connection(),
-                        $item->name,
-                        true,
-                    )
-                ];
-            });
+            ->when(!empty($this->tableFilter), fn ($query) => $query->whereIn('sys.tables.name', $this->tableFilter));
 
-        return $tables;
+        return $query->get()->mapWithKeys(function($item){
+            return [
+                $item->name => new Table(
+                    $this->connection(),
+                    $item->name,
+                    true,
+                )
+            ];
+        });
+    }
+
+    public function setTableFilter(array $tableFilter)
+    {
+        $this->tableFilter = $tableFilter;
+
+        return $this;
     }
 
     public function asCommand(Command $command): void
