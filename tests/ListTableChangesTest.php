@@ -21,6 +21,4 @@ class ListTableChangesTest extends TestCase
         $this->assertCount(1, $changes);
         $this->assertContainsOnlyInstancesOf(Change::class, $changes);
     }
-
-    }
 }
