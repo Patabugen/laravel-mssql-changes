@@ -23,8 +23,16 @@ php artisan vendor:publish --tag="mssql-changes-config"
 
 ## Usage
 
-```php
-```
+__Note: This package is in it's early stages, these commands may not work yet.__
+
+### Lists all changes in all tables.
+`artisan mssql:show-changes`
+
+### Forget all changes
+`artisan mssql:forget-changes`
+
+### Filter Changes by table
+`artisan mssql:show-changes --table=tableName --table=anotherTable`
 
 ## Testing
 
