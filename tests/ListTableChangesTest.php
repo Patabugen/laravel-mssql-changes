@@ -3,7 +3,9 @@
 namespace Patabugen\MssqlChanges\Tests;
 
 use Illuminate\Support\Facades\DB;
+use Patabugen\MssqlChanges\Actions\ListTableChanges;
 use Patabugen\MssqlChanges\Actions\ListTables;
+use Patabugen\MssqlChanges\Change;
 use Patabugen\MssqlChanges\Database;
 use Patabugen\MssqlChanges\Table;
 
@@ -11,6 +13,14 @@ class ListTableChangesTest extends TestCase
 {
     public function test_a_table_reports_its_changes()
     {
-        $this->assertTrue(true);
+        // Todo: Make a change to check it's there
+        // Maybe get version, then pass version to ListTableChanges
+        $table = Table::create('Contacts');
+        $changes = ListTableChanges::run($table);
+
+        $this->assertCount(1, $changes);
+        $this->assertContainsOnlyInstancesOf(Change::class, $changes);
+    }
+
     }
 }

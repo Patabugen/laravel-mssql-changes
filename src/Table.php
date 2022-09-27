@@ -10,15 +10,10 @@ use Patabugen\MssqlChanges\Actions\ListTables;
 
 class Table
 {
-    private Collection $changes;
-
+    public ConnectionInterface $connection;
+    public Collection $changes;
     public string $name;
-
-    private Collection $tables;
-
     public bool $columnTrackingEnabled;
-
-    public string $retentionPeriodUnitsDesc;
 
     public function __construct(
         ConnectionInterface $connection,
@@ -28,6 +23,11 @@ class Table
         $this->connection = $connection;
         $this->name = $name;
         $this->columnTrackingEnabled = $columnTrackingEnabled;
+    }
+
+    public function getPrimaryKeyColumn()
+    {
+        return 'ContactID';
     }
 
     public function toArray()
