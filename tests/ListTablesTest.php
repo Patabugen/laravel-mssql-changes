@@ -3,7 +3,6 @@
 namespace Patabugen\MssqlChanges\Tests;
 
 use Patabugen\MssqlChanges\Actions\ListTables;
-use Patabugen\MssqlChanges\Database;
 use Patabugen\MssqlChanges\Table;
 
 class ListTablesTest extends TestCase
