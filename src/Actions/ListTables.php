@@ -20,17 +20,19 @@ class ListTables extends BaseAction
     {
         $query = $this->connection()
             ->table('sys.change_tracking_tables')
-            ->select('*')
+            ->select('sys.tables.*')
+            // Link the change-tracking system info to the tables list
             ->join('sys.tables', 'sys.change_tracking_tables.object_id', 'sys.tables.object_id')
             ->orderBy('sys.tables.name')
             ->when(!empty($this->tableFilter), fn ($query) => $query->whereIn('sys.tables.name', $this->tableFilter));
-
         return $query->get()->mapWithKeys(function($item){
+            $primaryKey = $this->connection()->select('EXEC sp_pkeys ?', [ $item->name ])[0]->COLUMN_NAME;
             return [
                 $item->name => new Table(
                     $this->connection(),
                     $item->name,
                     true,
+                    $primaryKey,
                 )
             ];
         });

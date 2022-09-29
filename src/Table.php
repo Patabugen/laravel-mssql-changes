@@ -14,20 +14,18 @@ class Table
     public Collection $changes;
     public string $name;
     public bool $columnTrackingEnabled;
+    public string $primaryKeyName;
 
     public function __construct(
         ConnectionInterface $connection,
         string $name,
         bool $columnTrackingEnabled,
+        string $primaryKeyName,
     ) {
         $this->connection = $connection;
         $this->name = $name;
         $this->columnTrackingEnabled = $columnTrackingEnabled;
-    }
-
-    public function getPrimaryKeyColumn()
-    {
-        return 'ContactID';
+        $this->primaryKeyName = $primaryKeyName;
     }
 
     public function toArray()

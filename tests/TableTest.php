@@ -17,6 +17,7 @@ class TableTest extends TestCase
         $table = Table::create('Contacts');
         $this->assertInstanceOf(Table::class, $table);
         $this->assertEquals('Contacts', $table->name);
+        $this->assertEquals('ContactID', $table->primaryKeyName);
         $this->assertTrue($table->columnTrackingEnabled);
     }
 }
