@@ -22,6 +22,7 @@ class ListTables extends BaseAction
             ->table('sys.change_tracking_tables')
             ->select('*')
             ->join('sys.tables', 'sys.change_tracking_tables.object_id', 'sys.tables.object_id')
+            ->orderBy('sys.tables.name')
             ->when(!empty($this->tableFilter), fn ($query) => $query->whereIn('sys.tables.name', $this->tableFilter));
 
         return $query->get()->mapWithKeys(function($item){
@@ -44,7 +45,14 @@ class ListTables extends BaseAction
 
     public function asCommand(Command $command): void
     {
-        $changes = $this->handle();
-        ray($changes);
+        $tables = $this->handle();
+        $headers = array_keys($tables->first()->toArray());
+        $command->table(
+            $headers,
+            $tables->map(function(Table $table){
+                return $table->toArray();
+            })->toArray(),
+        );
+        $command->info(count($tables).' tables have change tracking enabled');
     }
 }

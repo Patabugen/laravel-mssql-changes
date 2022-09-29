@@ -2,6 +2,7 @@
 
 namespace Patabugen\MssqlChanges\Tests;
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Patabugen\MssqlChanges\Actions\ListTables;
 use Patabugen\MssqlChanges\Database;
@@ -31,5 +32,27 @@ class ListTablesTest extends TestCase
         $this->assertArrayHasKey('Contacts', $tables);
         $this->assertArrayNotHasKey('Transactions', $tables);
         $this->assertArrayHasKey('TransactionLines', $tables);
+    }
+
+    public function test_we_can_list_tables_from_artisan()
+    {
+        /**
+         * Because we're not creating a test database we can't properly use
+         * expectsTable. Hopefully I'll be able to add a test database (Rather
+         * than testing against my dev one) - but in the mean time let's test a
+         * few bits.
+         */
+        $command = $this->artisan('mssql:list-tables')
+            ->assertSuccessful()
+            ->expectsOutputToContain('135 tables have change tracking enabled')
+            ->expectsOutputToContain('+---------------------------------------+------------------------+')
+            ->expectsOutputToContain('| Name                                  | Column Tracking Status |')
+            ->expectsOutputToContain('| Contacts                              | Enabled                |');
+    }
+
+    public function test_we_can_filter_tables_from_artisan()
+    {
+        $result = Artisan::call('mssql:list-tables --tables=Contacts');
+        $this->assertEmpty($result);
     }
 }
