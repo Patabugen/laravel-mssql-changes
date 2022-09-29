@@ -47,12 +47,7 @@ class ListTablesTest extends TestCase
             ->expectsOutputToContain('135 tables have change tracking enabled')
             ->expectsOutputToContain('+---------------------------------------+------------------------+')
             ->expectsOutputToContain('| Name                                  | Column Tracking Status |')
-            ->expectsOutputToContain('| Contacts                              | Enabled                |');
+            ->expectsOutputToContain('| Contacts     ');
     }
 
-    public function test_we_can_filter_tables_from_artisan()
-    {
-        $result = Artisan::call('mssql:list-tables --tables=Contacts');
-        $this->assertEmpty($result);
-    }
 }

@@ -2,11 +2,8 @@
 
 namespace Patabugen\MssqlChanges\Tests;
 
-use Illuminate\Support\Facades\DB;
 use Patabugen\MssqlChanges\Actions\ListTableChanges;
-use Patabugen\MssqlChanges\Actions\ListTables;
 use Patabugen\MssqlChanges\Change;
-use Patabugen\MssqlChanges\Database;
 use Patabugen\MssqlChanges\Table;
 
 class ListTableChangesTest extends TestCase
@@ -20,5 +17,19 @@ class ListTableChangesTest extends TestCase
 
         $this->assertCount(1, $changes);
         $this->assertContainsOnlyInstancesOf(Change::class, $changes);
+    }
+
+    public function test_we_can_list_table_changes_from_artisan()
+    {
+        /**
+         * Because we're not creating a test database we can't properly use
+         * expectsTable. Hopefully I'll be able to add a test database (Rather
+         * than testing against my dev one) - but in the mean time let's test a
+         * few bits.
+         */
+        $this->artisan('mssql:list-table-changes Contacts')
+            ->assertSuccessful()
+            ->expectsOutputToContain('| Table    | Primary Key | Column Name |')
+            ->expectsOutputToContain('Table Contacts has 1 changes');
     }
 }

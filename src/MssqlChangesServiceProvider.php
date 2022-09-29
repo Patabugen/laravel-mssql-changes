@@ -2,10 +2,7 @@
 
 namespace Patabugen\MssqlChanges;
 
-use Lorisleiva\Actions\Facades\Actions;
-use Patabugen\MssqlChanges\Actions\ListTableChanges;
-use Patabugen\MssqlChanges\Actions\ListDatabases;
-use Patabugen\MssqlChanges\Actions\ListTables;
+use Patabugen\MssqlChanges\Console\Commands\ListTableChangesCommand;
 use Patabugen\MssqlChanges\Console\Commands\ListTablesCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -19,6 +16,7 @@ class MssqlChangesServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             ->hasCommands([
                 ListTablesCommand::class,
+                ListTableChangesCommand::class,
             ]);
     }
 }

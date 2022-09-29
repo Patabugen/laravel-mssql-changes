@@ -15,17 +15,20 @@ class Table
     public string $name;
     public bool $columnTrackingEnabled;
     public string $primaryKeyName;
+    public Collection $columns;
 
     public function __construct(
         ConnectionInterface $connection,
         string $name,
         bool $columnTrackingEnabled,
         string $primaryKeyName,
+        Collection $columns,
     ) {
         $this->connection = $connection;
         $this->name = $name;
         $this->columnTrackingEnabled = $columnTrackingEnabled;
         $this->primaryKeyName = $primaryKeyName;
+        $this->columns = $columns;
     }
 
     public function toArray()

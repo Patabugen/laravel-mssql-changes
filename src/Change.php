@@ -3,8 +3,6 @@
 namespace Patabugen\MssqlChanges;
 
 use Illuminate\Database\ConnectionInterface;
-use Illuminate\Support\Collection;
-use Patabugen\MssqlChanges\Actions\ListTables;
 
 class Change
 {
@@ -12,17 +10,20 @@ class Change
     private string $primaryKey;
     private string $columnName;
     private Table $table;
+    private int $sysChangeVersion;
 
     public function __construct(
         ConnectionInterface $connection,
         Table $table,
         string|int $primaryKey,
         string $columnName,
+        string $sysChangeVersion,
     ) {
         $this->connection = $connection;
         $this->primaryKey = $primaryKey;
         $this->table = $table;
         $this->columnName = $columnName;
+        $this->sysChangeVersion = $sysChangeVersion;
     }
 
     public function toArray()
@@ -30,7 +31,8 @@ class Change
         return [
             'Table' => $this->table->name,
             'Primary Key' => $this->primaryKey,
-            'Column Name' => $this->columnName
+            'Column Name' => $this->columnName,
+            'Change Version' => $this->sysChangeVersion,
         ];
     }
 }
