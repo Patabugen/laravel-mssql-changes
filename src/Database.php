@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 class Database implements Arrayable
 {
     private ConnectionInterface $connection;
+
     public string $name;
 
     private Collection $tables;
@@ -41,7 +42,7 @@ class Database implements Arrayable
         ];
     }
 
-    static function create()
+    public static function create()
     {
         $connection = DB::connection(config('database.default'));
 

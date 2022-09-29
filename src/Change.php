@@ -7,9 +7,13 @@ use Illuminate\Database\ConnectionInterface;
 class Change
 {
     private ConnectionInterface $connection;
+
     private string $primaryKey;
+
     private string $columnName;
+
     private Table $table;
+
     private int $sysChangeVersion;
 
     public function __construct(

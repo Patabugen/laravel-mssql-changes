@@ -9,11 +9,13 @@ use Patabugen\MssqlChanges\Table;
 class ListTables extends BaseAction
 {
     public string $commandSignature = 'mssql:list-tables';
+
     public array $tableFilter = [];
 
     /**
      * Returns a collection of Table objects for any table which has Change Tracking
      * enabled. Does not include tables with tracking disabled.
+     *
      * @return Collection
      */
     public function handle(): Collection
@@ -24,10 +26,10 @@ class ListTables extends BaseAction
             // Link the change-tracking system info to the tables list
             ->join('sys.tables', 'sys.change_tracking_tables.object_id', 'sys.tables.object_id')
             ->orderBy('sys.tables.name')
-            ->when(!empty($this->tableFilter), fn ($query) => $query->whereIn('sys.tables.name', $this->tableFilter));
+            ->when(! empty($this->tableFilter), fn ($query) => $query->whereIn('sys.tables.name', $this->tableFilter));
 
-        return $query->get()->mapWithKeys(function($item){
-            $primaryKey = $this->connection()->select('EXEC sp_pkeys ?', [ $item->name ])[0]->COLUMN_NAME;
+        return $query->get()->mapWithKeys(function ($item) {
+            $primaryKey = $this->connection()->select('EXEC sp_pkeys ?', [$item->name])[0]->COLUMN_NAME;
 
             $columns = $this->connection()
                 ->table('INFORMATION_SCHEMA.COLUMNS')
@@ -42,7 +44,7 @@ class ListTables extends BaseAction
                     columnTrackingEnabled: true,
                     primaryKeyName: $primaryKey,
                     columns: $columns
-                )
+                ),
             ];
         });
     }
@@ -60,7 +62,7 @@ class ListTables extends BaseAction
         $headers = array_keys($tables->first()->toArray());
         $command->table(
             $headers,
-            $tables->map(function(Table $table){
+            $tables->map(function (Table $table) {
                 return $table->toArray();
             })->toArray(),
         );

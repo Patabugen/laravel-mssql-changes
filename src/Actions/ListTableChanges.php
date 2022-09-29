@@ -3,12 +3,8 @@
 namespace  Patabugen\MssqlChanges\Actions;
 
 use Illuminate\Console\Command;
-use Illuminate\Database\ConnectionInterface;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Lorisleiva\Actions\Concerns\AsAction;
 use Patabugen\MssqlChanges\Change;
 use Patabugen\MssqlChanges\Table;
 
@@ -45,6 +41,7 @@ class ListTableChanges extends BaseAction
                     $changedColumns->push($column->COLUMN_NAME);
                 }
             }
+
             return new Change(
                 connection: $this->connection(),
                 primaryKey: $item->{$table->primaryKeyName},
@@ -53,10 +50,11 @@ class ListTableChanges extends BaseAction
                 sysChangeVersion: $item->SYS_CHANGE_VERSION,
             );
         });
+
         return $changes;
     }
 
-    public function asCommand (Command $command)
+    public function asCommand(Command $command)
     {
         $table = Table::create($command->argument('table'));
 
@@ -64,11 +62,10 @@ class ListTableChanges extends BaseAction
         $headers = array_keys($changes->first()->toArray());
         $command->table(
             $headers,
-            $changes->map(function(Change $table){
+            $changes->map(function (Change $table) {
                 return $table->toArray();
             })->toArray(),
         );
-        $command->info('Table '. $table->name.' has '. count($changes).' changes');
-
+        $command->info('Table '.$table->name.' has '.count($changes).' changes');
     }
 }

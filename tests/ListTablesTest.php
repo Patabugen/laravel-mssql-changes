@@ -2,8 +2,6 @@
 
 namespace Patabugen\MssqlChanges\Tests;
 
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
 use Patabugen\MssqlChanges\Actions\ListTables;
 use Patabugen\MssqlChanges\Database;
 use Patabugen\MssqlChanges\Table;
@@ -24,7 +22,7 @@ class ListTablesTest extends TestCase
     public function test_we_can_filter_and_list_tables_with_tracking_enabled()
     {
         $tables = ListTables::make()
-            ->setTableFilter([ 'Contacts', 'TransactionLines' ])
+            ->setTableFilter(['Contacts', 'TransactionLines'])
             ->handle();
 
         $this->assertCount(2, $tables);
@@ -49,5 +47,4 @@ class ListTablesTest extends TestCase
             ->expectsOutputToContain('| Name                                  | Column Tracking Status |')
             ->expectsOutputToContain('| Contacts     ');
     }
-
 }
