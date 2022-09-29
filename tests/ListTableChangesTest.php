@@ -29,7 +29,7 @@ class ListTableChangesTest extends TestCase
          */
         $this->artisan('mssql:list-table-changes Contacts')
             ->assertSuccessful()
-            ->expectsOutputToContain('| Table    | Primary Key | Column Name |')
+            ->expectsOutputToContain('| Table    | Primary Key | Columns Changed      | Change Version |')
             ->expectsOutputToContain('Table Contacts has 1 changes');
     }
 }

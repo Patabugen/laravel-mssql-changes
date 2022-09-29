@@ -31,7 +31,7 @@ class Change
         return [
             'Table' => $this->table->name,
             'Primary Key' => $this->primaryKey,
-            'Column Name' => $this->columnName,
+            'Columns Changed' => $this->columnName,
             'Change Version' => $this->sysChangeVersion,
         ];
     }
