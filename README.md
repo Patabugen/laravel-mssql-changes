@@ -36,6 +36,11 @@ php artisan vendor:publish --tag="mssql-changes-config"
 
 __Note: This package is in it's early stages, these commands may not work yet.__
 
+The default database from your config will be used, or set environment variable `MSSQL_CHANGES_CONNECTION` to the name of the connection to use.
+
+### Enable change tracking for the database
+`artisan mssql:enable-change-tracking`
+
 ### Lists all changes in all tables.
 `artisan mssql:list-changes`
 
@@ -60,7 +65,6 @@ $ php artisan mssql:list-table-changes Addresses
 I'd like to add these commands or features:
 
  - Creating a test database for the tests
- - `artisan mssql:enable-change-tracking`
  - `artisan mssql:disable-change-tracking`
  - `artisan mssql:list-status` // Show the status of databases/tables
 

@@ -4,6 +4,7 @@ namespace Patabugen\MssqlChanges\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Patabugen\MssqlChanges\Actions\EnableDatabaseChangeTracking;
 use Patabugen\MssqlChanges\MssqlChangesServiceProvider;
 
 abstract class TestCase extends Orchestra
@@ -27,6 +28,12 @@ abstract class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         $this->setDatabaseConfig();
+        $this->enableChangeTracking();
+    }
+
+    private function enableChangeTracking()
+    {
+        EnableDatabaseChangeTracking::run();
     }
 
     public function setDatabaseConfig()
