@@ -3,6 +3,7 @@
 namespace Patabugen\MssqlChanges;
 
 use Patabugen\MssqlChanges\Console\Commands\EnableDatabaseChangeTrackingCommand;
+use Patabugen\MssqlChanges\Console\Commands\GetVersionCommand;
 use Patabugen\MssqlChanges\Console\Commands\ListTableChangesCommand;
 use Patabugen\MssqlChanges\Console\Commands\ListTablesCommand;
 use Patabugen\MssqlChanges\Console\Commands\ShowChangesCommand;
@@ -20,6 +21,7 @@ class MssqlChangesServiceProvider extends PackageServiceProvider
                 ListTablesCommand::class,
                 ListTableChangesCommand::class,
                 ShowChangesCommand::class,
+                GetVersionCommand::class,
                 EnableDatabaseChangeTrackingCommand::class,
             ]);
     }

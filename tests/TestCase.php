@@ -29,6 +29,8 @@ abstract class TestCase extends Orchestra
     {
         $this->setDatabaseConfig();
         $this->enableChangeTracking();
+        $migration = include __DIR__.'/../database/migrations/create_contacts_table.php';
+        $migration->up();
     }
 
     private function enableChangeTracking()

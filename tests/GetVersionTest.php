@@ -2,16 +2,22 @@
 
 namespace Patabugen\MssqlChanges\Tests;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Patabugen\MssqlChanges\Actions\GetVersion;
 use Patabugen\MssqlChanges\Actions\ListTableChanges;
 use Patabugen\MssqlChanges\Change;
+use Patabugen\MssqlChanges\Models\Contact;
 use Patabugen\MssqlChanges\Table;
 
-
-class ShowChangesTest extends TestCase
+class GetVersionTest extends TestCase
 {
-    public function test_show_changes_includes_multiple_tables()
+    use RefreshDatabase;
+
+
+    public function test_get_version_reports_correct_version()
     {
-        // Todo: Make a change to check it's there
+        $version = GetVersion::run();
+        $contact = Contact::factory()->create();
         // Maybe get version, then pass version to ListTableChanges
         $table = Table::create('Contacts');
         $changes = ListTableChanges::run($table);
@@ -22,17 +28,17 @@ class ShowChangesTest extends TestCase
         $this->markTestIncomplete();
     }
 
-    public function test_we_can_list_table_changes_from_artisan()
+    public function test_we_can_get_version_from_artisan()
     {
         /**
          * Because we're not creating a test database we can't properly use
          * expectsTable. Hopefully I'll be able to add a test database (Rather
-         * than testing against my dev one) - but in the mean time let's test a
+         * than testing against my dev one) - but in the meantime let's test a
          * few bits.
          */
-        $this->artisan('mssql:list-table-changes Contacts')
+        $version = GetVersion::run();
+        $this->artisan('mssql:get-version')
             ->assertSuccessful()
-            ->expectsOutputToContain('| Table    | Primary Key | Columns Changed      | Change Version |')
-            ->expectsOutputToContain('Table Contacts has 1 changes');
+            ->expectsOutput($version);
     }
 }
