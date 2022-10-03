@@ -23,7 +23,7 @@ php artisan vendor:publish --tag="mssql-changes-config"
 
 ## Usage - PHP
 ```php
-    $sqlChanges = Patabugen\SqlChanges::create(config('db.sqlsrv'));
+    $tables = Patabugen\SqlChanges::create(config('db.sqlsrv'));
     foreach ($sqlChanges->getTables() as $table) {
         echo "Table {$table->name} has {$table->getChanges()->count()} Changes";
         foreach ($table->getChanges() as $change) {
@@ -42,8 +42,19 @@ __Note: This package is in it's early stages, these commands may not work yet.__
 ### Forget all changes
 `artisan mssql:forget-changes`
 
+// This doesn't work yet - but the idea is it'll flush the change tracking to help you test
+
 ### Filter Changes by table
-`artisan mssql:list-changes --table=tableName --table=anotherTable`
+`artisan mssql:list-table-changes {tableName}`
+
+```shell
+$ php artisan mssql:list-table-changes Addresses
++-----------+-------------+---------------------+----------------+
+| Table     | Primary Key | Columns Changed     | Change Version |
++-----------+-------------+---------------------+----------------+
+| Addresses | 91750       | Address1, upsize_ts | 5              |
++-----------+-------------+---------------------+----------------+
+```
 
 ## Todo
 I'd like to add these commands or features:

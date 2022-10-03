@@ -59,6 +59,11 @@ class ListTableChanges extends BaseAction
         $table = Table::create($command->argument('table'));
 
         $changes = $this->handle($table);
+
+        if ($changes->isEmpty()) {
+            $command->info('No changes found in '.$table->name);
+            return;
+        }
         $headers = array_keys($changes->first()->toArray());
         $command->table(
             $headers,
