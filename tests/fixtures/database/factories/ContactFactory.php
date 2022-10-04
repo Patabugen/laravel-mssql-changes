@@ -1,6 +1,6 @@
 <?php
 
-namespace Patabugen\MssqlChanges\Database\Factories;
+namespace Patabugen\MssqlChanges\Tests\Fixtures\Database\Factories;
 
 use Patabugen\MssqlChanges\Models\Contact;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -12,7 +12,8 @@ class ContactFactory extends Factory
     public function definition(): array
     {
         return [
-
+            'Firstname' => fake()->firstName,
+            'Surname' => fake()->lastName,
         ];
     }
 }

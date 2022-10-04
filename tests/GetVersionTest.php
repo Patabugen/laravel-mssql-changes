@@ -2,6 +2,7 @@
 
 namespace Patabugen\MssqlChanges\Tests;
 
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Patabugen\MssqlChanges\Actions\GetVersion;
 use Patabugen\MssqlChanges\Actions\ListTableChanges;
@@ -11,13 +12,14 @@ use Patabugen\MssqlChanges\Table;
 
 class GetVersionTest extends TestCase
 {
-    use RefreshDatabase;
-
+    // use LazilyRefreshDatabase;
 
     public function test_get_version_reports_correct_version()
     {
         $version = GetVersion::run();
+
         $contact = Contact::factory()->create();
+
         // Maybe get version, then pass version to ListTableChanges
         $table = Table::create('Contacts');
         $changes = ListTableChanges::run($table);

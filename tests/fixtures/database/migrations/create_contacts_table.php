@@ -9,8 +9,8 @@ return new class extends Migration {
     {
         Schema::create('Contacts', function (Blueprint $table) {
             $table->id('ContactID');
-            $table->string('Firstname');
-            $table->string('Surname');
+            $table->string('Firstname')->nullable();
+            $table->string('Surname')->nullable();
         });
     }
 

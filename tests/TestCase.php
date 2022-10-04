@@ -3,18 +3,27 @@
 namespace Patabugen\MssqlChanges\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Patabugen\MssqlChanges\Actions\EnableDatabaseChangeTracking;
 use Patabugen\MssqlChanges\MssqlChangesServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
+
     protected function setUp(): void
     {
         parent::setUp();
 
+        $this->runLaravelMigrations();
+        $this->loadMigrationsFrom(__DIR__.'/fixtures/database/migrations');
+
+        PDO
+
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Patabugen\\MssqlChanges\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'Patabugen\\MssqlChanges\\Tests\\Fixtures\Database\\Factories\\'.class_basename
+                ($modelName)
+                .'Factory'
         );
     }
 
@@ -28,15 +37,16 @@ abstract class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         $this->setDatabaseConfig();
+
+
         $this->enableChangeTracking();
-        $migration = include __DIR__.'/../database/migrations/create_contacts_table.php';
-        $migration->up();
     }
 
     private function enableChangeTracking()
     {
         EnableDatabaseChangeTracking::run();
     }
+
 
     public function setDatabaseConfig()
     {
