@@ -35,7 +35,7 @@
     "autoload": {
         "psr-4": {
             "Patabugen\\MssqlChanges\\": "src",
-            "Patabugen\\MssqlChanges\\Database\\Factories\\": "database/factories"
+            "Patabugen\\MssqlChanges\\Database\\Factories\\": "database/factories",
             "Patabugen\\MssqlChanges\\Tests\\Fixtures\\Database\\Factories\\": "tests/fixtures/database/factories"
         }
     },
