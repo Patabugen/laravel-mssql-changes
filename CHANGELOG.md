@@ -2,7 +2,10 @@
 
 All notable changes to `laravel-mssql-changes` will be documented in this file.
 
-## 2022-10-10 Initial Release
+## 1.0.0 - 2022-10-10
+
+Initial Release
+
  - Enable Tracking on Database and Tables
  - List databases with tracking enabled
  - List tables with tracking enabled
