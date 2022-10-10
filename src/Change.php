@@ -6,15 +6,15 @@ use Illuminate\Database\ConnectionInterface;
 
 class Change
 {
-    private ConnectionInterface $connection;
+    public ConnectionInterface $connection;
 
-    private string $primaryKey;
+    public string $primaryKey;
 
-    private string $columnName;
+    public string $columnName;
 
-    private Table $table;
+    public Table $table;
 
-    private int $sysChangeVersion;
+    public int $sysChangeVersion;
 
     public function __construct(
         ConnectionInterface $connection,

@@ -28,7 +28,7 @@ class ShowChanges extends BaseAction
                 ->fromVersion($this->fromVersion)
                 ->toVersion($this->toVersion)
                 ->handle($table);
-        });
+        })->sortBy('sysChangeVersion');
 
         return $changes;
     }
