@@ -10,6 +10,9 @@ use Patabugen\MssqlChanges\Table;
 
 class ListTableChanges extends BaseAction
 {
+    public int $fromVersion = 1;
+    public ?int $toVersion = null;
+
     public function handle(Table $table): Collection
     {
         $sql = $this->connection()
@@ -30,10 +33,13 @@ class ListTableChanges extends BaseAction
         }
         $sql = Str::of($sql->toSql())->replace(
             '[TABLE-PLACEHOLDER]',
-            'CHANGETABLE(CHANGES '.$table->name.', 0)'
+            'CHANGETABLE(CHANGES '.$table->name.', '.($this->fromVersion - 1).')' // Minus 1 for >= 
         );
 
         $changes = collect($this->connection()->select($sql))->map(function (\stdClass $item) use ($table) {
+            if (isset($this->toVersion) && $item->SYS_CHANGE_VERSION > $this->toVersion) {
+                return false;
+            }
             $changedColumns = new Collection;
             foreach ($table->columns as $column) {
                 $property = $column->COLUMN_NAME.'Changed';
@@ -49,15 +55,32 @@ class ListTableChanges extends BaseAction
                 columnName: $changedColumns->join(', '),
                 sysChangeVersion: $item->SYS_CHANGE_VERSION,
             );
-        });
+        })->filter();
 
         return $changes;
+    }
+
+    public function fromVersion(int $version)
+    {
+        $this->fromVersion = $version;
+        return $this;
+    }
+
+    public function toVersion(int $version)
+    {
+        $this->toVersion = $version;
+        return $this;
     }
 
     public function asCommand(Command $command)
     {
         $table = Table::create($command->argument('table'));
-
+        if ($command->option('from')) {
+            $this->fromVersion($command->option('from'));
+        }
+        if ($command->option('to')) {
+            $this->toVersion($command->option('to'));
+        }
         $changes = $this->handle($table);
 
         if ($changes->isEmpty()) {
@@ -71,6 +94,7 @@ class ListTableChanges extends BaseAction
                 return $table->toArray();
             })->toArray(),
         );
-        $command->info('Table '.$table->name.' has '.count($changes).' changes');
+        
+        $command->info('Table '.$table->fullName().' has '.count($changes).' changes');
     }
 }

@@ -42,6 +42,11 @@ class Table
         ];
     }
 
+    public function fullName()
+    {
+        return $this->connection->getDatabaseName().'.'.$this->name;
+    }
+
     public static function create(string $name)
     {
         $foundTables = ListTables::make()->setTableFilter([$name])->handle();

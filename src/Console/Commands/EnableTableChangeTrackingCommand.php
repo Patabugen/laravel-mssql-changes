@@ -7,7 +7,7 @@ use Patabugen\MssqlChanges\Actions\EnableTableChangeTracking;
 
 class EnableTableChangeTrackingCommand extends Command
 {
-    protected $signature = 'mssql:enable-table-change-tracking {$table}';
+    protected $signature = 'mssql:enable-table-change-tracking {table}';
 
     public function handle()
     {

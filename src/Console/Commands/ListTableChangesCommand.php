@@ -7,7 +7,7 @@ use Patabugen\MssqlChanges\Actions\ListTableChanges;
 
 class ListTableChangesCommand extends Command
 {
-    protected $signature = 'mssql:list-table-changes {table}';
+    protected $signature = 'mssql:list-table-changes {table} {--from=} {--to=}';
 
     public function handle()
     {
