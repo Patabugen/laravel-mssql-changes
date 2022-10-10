@@ -3,8 +3,6 @@
 namespace Patabugen\MssqlChanges\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Patabugen\MssqlChanges\Actions\EnableDatabaseChangeTracking;
 use Patabugen\MssqlChanges\Actions\EnableTableChangeTracking;
@@ -21,8 +19,7 @@ abstract class TestCase extends Orchestra
         $this->enableChangeTracking();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Patabugen\\MssqlChanges\\Tests\\Fixtures\Database\\Factories\\'.class_basename
-                ($modelName)
+            fn (string $modelName) => 'Patabugen\\MssqlChanges\\Tests\\Fixtures\Database\\Factories\\'.class_basename($modelName)
                 .'Factory'
         );
     }
@@ -38,7 +35,6 @@ abstract class TestCase extends Orchestra
     {
         $this->setDatabaseConfig();
 
-
         $this->enableChangeTracking();
     }
 
@@ -47,7 +43,6 @@ abstract class TestCase extends Orchestra
         EnableDatabaseChangeTracking::run();
         EnableTableChangeTracking::run('Contacts');
     }
-
 
     public function setDatabaseConfig()
     {

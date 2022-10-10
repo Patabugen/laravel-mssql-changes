@@ -3,8 +3,6 @@
 namespace Patabugen\MssqlChanges\Actions;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Collection;
-use Patabugen\MssqlChanges\Database;
 
 class GetVersion extends BaseAction
 {
@@ -18,11 +16,12 @@ class GetVersion extends BaseAction
             ->first()
             ->ChangeTrackingCurrentVersion;
 
-        throw_unless (
+        throw_unless(
             is_numeric($version),
             'CHANGE_TRACKING_CURRENT_VERSION() returned null, is change tracking enabled on '
-            . $this->connection()->getDatabaseName().'?'
+            .$this->connection()->getDatabaseName().'?'
         );
+
         return $version;
     }
 

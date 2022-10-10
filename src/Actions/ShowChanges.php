@@ -23,12 +23,13 @@ class ShowChanges extends BaseAction
             ->setTableFilter($this->tableFilter)
             ->handle();
 
-        $changes = $tables->flatMap(function (Table $table){
+        $changes = $tables->flatMap(function (Table $table) {
             return ListTableChanges::make()
                 ->fromVersion($this->fromVersion)
                 ->toVersion($this->toVersion)
                 ->handle($table);
         });
+
         return $changes;
     }
 
@@ -45,6 +46,7 @@ class ShowChanges extends BaseAction
         $changes = $this->handle();
         if ($changes->isEmpty()) {
             $command->info('No changes found');
+
             return;
         }
         $headers = array_keys($changes->first()->toArray());

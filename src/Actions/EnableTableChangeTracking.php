@@ -4,10 +4,7 @@ namespace Patabugen\MssqlChanges\Actions;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Patabugen\MssqlChanges\Database;
-use Patabugen\MssqlChanges\Table;
 
 class EnableTableChangeTracking extends BaseAction
 {
@@ -33,6 +30,7 @@ class EnableTableChangeTracking extends BaseAction
                 throw $e;
             }
         }
+
         return $this->return($this->messages[1], $tableName);
     }
 
@@ -40,6 +38,7 @@ class EnableTableChangeTracking extends BaseAction
     {
         $message = sprintf($messageTemplate, $databaseName);
         logger($message);
+
         return $message;
     }
 
@@ -48,6 +47,5 @@ class EnableTableChangeTracking extends BaseAction
         $command->info($this->handle(
             $command->argument('table')
         ));
-
     }
 }

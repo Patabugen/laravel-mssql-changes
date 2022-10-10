@@ -3,7 +3,6 @@
 namespace Patabugen\MssqlChanges\Tests;
 
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Patabugen\MssqlChanges\Actions\GetVersion;
 use Patabugen\MssqlChanges\Actions\ListTableChanges;
 use Patabugen\MssqlChanges\Change;

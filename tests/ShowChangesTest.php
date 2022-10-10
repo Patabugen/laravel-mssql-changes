@@ -6,7 +6,6 @@ use Patabugen\MssqlChanges\Actions\ListTableChanges;
 use Patabugen\MssqlChanges\Change;
 use Patabugen\MssqlChanges\Table;
 
-
 class ShowChangesTest extends TestCase
 {
     public function test_show_changes_includes_multiple_tables()

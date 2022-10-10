@@ -33,7 +33,7 @@ class ListTableChanges extends BaseAction
         }
         $sql = Str::of($sql->toSql())->replace(
             '[TABLE-PLACEHOLDER]',
-            'CHANGETABLE(CHANGES '.$table->name.', '.($this->fromVersion - 1).')' // Minus 1 for >= 
+            'CHANGETABLE(CHANGES '.$table->name.', '.($this->fromVersion - 1).')' // Minus 1 for >=
         );
 
         $changes = collect($this->connection()->select($sql))->map(function (\stdClass $item) use ($table) {
@@ -68,6 +68,7 @@ class ListTableChanges extends BaseAction
 
         if ($changes->isEmpty()) {
             $command->info('No changes found in '.$table->name);
+
             return;
         }
         $headers = array_keys($changes->first()->toArray());
@@ -77,7 +78,7 @@ class ListTableChanges extends BaseAction
                 return $table->toArray();
             })->toArray(),
         );
-        
+
         $command->info('Table '.$table->fullName().' has '.count($changes).' changes');
     }
 }

@@ -4,13 +4,12 @@ namespace Patabugen\MssqlChanges\Actions;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Patabugen\MssqlChanges\Database;
 
 class EnableDatabaseChangeTracking extends BaseAction
 {
     public string $commandSignature = 'mssql:enable-change-tracking';
+
     private array $messages = [
         1 => 'Change Tracking enabled for database %s',
         2 => 'Change Tracking is already enabled for database %s',
@@ -30,6 +29,7 @@ class EnableDatabaseChangeTracking extends BaseAction
                 throw $e;
             }
         }
+
         return $this->return($this->messages[1], $databaseName);
     }
 
@@ -37,12 +37,12 @@ class EnableDatabaseChangeTracking extends BaseAction
     {
         $message = sprintf($messageTemplate, $databaseName);
         logger($message);
+
         return $message;
     }
 
     public function asCommand(Command $command): void
     {
         $command->info($this->handle());
-
     }
 }
