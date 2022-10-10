@@ -7,11 +7,11 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Patabugen\MssqlChanges\Change;
 use Patabugen\MssqlChanges\Table;
+use Patabugen\MssqlChanges\Traits\HasVersionFiltersTrait;
 
 class ListTableChanges extends BaseAction
 {
-    public int $fromVersion = 1;
-    public ?int $toVersion = null;
+    use HasVersionFiltersTrait;
 
     public function handle(Table $table): Collection
     {
@@ -60,27 +60,10 @@ class ListTableChanges extends BaseAction
         return $changes;
     }
 
-    public function fromVersion(int $version)
-    {
-        $this->fromVersion = $version;
-        return $this;
-    }
-
-    public function toVersion(int $version)
-    {
-        $this->toVersion = $version;
-        return $this;
-    }
-
     public function asCommand(Command $command)
     {
         $table = Table::create($command->argument('table'));
-        if ($command->option('from')) {
-            $this->fromVersion($command->option('from'));
-        }
-        if ($command->option('to')) {
-            $this->toVersion($command->option('to'));
-        }
+        $this->readVersionFilters($command);
         $changes = $this->handle($table);
 
         if ($changes->isEmpty()) {

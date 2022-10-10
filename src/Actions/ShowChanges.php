@@ -7,9 +7,12 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Patabugen\MssqlChanges\Change;
 use Patabugen\MssqlChanges\Table;
+use Patabugen\MssqlChanges\Traits\HasVersionFiltersTrait;
 
 class ShowChanges extends BaseAction
 {
+    use HasVersionFiltersTrait;
+
     public string $commandSignature = 'mssql:show-changes';
 
     public array $tableFilter = [];
@@ -21,7 +24,10 @@ class ShowChanges extends BaseAction
             ->handle();
 
         $changes = $tables->flatMap(function (Table $table){
-            return ListTableChanges::run($table);
+            return ListTableChanges::make()
+                ->fromVersion($this->fromVersion)
+                ->toVersion($this->toVersion)
+                ->handle($table);
         });
         return $changes;
     }
@@ -35,8 +41,7 @@ class ShowChanges extends BaseAction
 
     public function asCommand(Command $command)
     {
-//        $table = Table::create($command->argument('table'));
-
+        $this->readVersionFilters($command);
         $changes = $this->handle();
         if ($changes->isEmpty()) {
             $command->info('No changes found');

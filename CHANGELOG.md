@@ -1,3 +1,11 @@
 # Changelog
 
 All notable changes to `laravel-mssql-changes` will be documented in this file.
+
+## 2022-10-10 Initial Release
+ - Enable Tracking on Database and Tables
+ - List databases with tracking enabled
+ - List tables with tracking enabled
+ - Get the latest Change version for a database
+ - List tracked changes for a particular table
+ - List all changes for all tracked tables
