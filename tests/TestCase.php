@@ -16,6 +16,7 @@ abstract class TestCase extends Orchestra
 
         $this->runLaravelMigrations();
         $this->loadMigrationsFrom(__DIR__.'/fixtures/database/migrations');
+
         $this->enableChangeTracking();
 
         Factory::guessFactoryNamesUsing(
@@ -28,6 +29,7 @@ abstract class TestCase extends Orchestra
     {
         return [
             MssqlChangesServiceProvider::class,
+            \Spatie\LaravelRay\RayServiceProvider::class,
         ];
     }
 
