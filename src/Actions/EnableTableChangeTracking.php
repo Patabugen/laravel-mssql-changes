@@ -15,10 +15,18 @@ class EnableTableChangeTracking extends BaseAction
         2 => 'Change Tracking is already enabled for table %s',
     ];
 
-    public function handle(string $tableName): string
+    public function handle(string $rawTableName): string
     {
         // Some rudimentary sanitising/escaping.
-        $tableName = Str::of($tableName)->ascii()->wrap('[', ']');
+        $tableName = Str::of($rawTableName)->ascii()->wrap('[', ']');
+
+        throw_unless(
+            $this->connection()->getSchemaBuilder()->hasTable($rawTableName),
+            'Table '.$tableName.' does not exist'
+            .' in database '.$this->connection()->getDatabaseName()
+            .' at '.$this->connection()->getConfig('host')
+        );
+
         try {
             $this->connection()->unprepared(
                 'ALTER TABLE '.$tableName.' ENABLE CHANGE_TRACKING WITH (TRACK_COLUMNS_UPDATED = ON);',
@@ -33,6 +41,7 @@ class EnableTableChangeTracking extends BaseAction
 
         return $this->return($this->messages[1], $tableName);
     }
+
 
     private function return(string $messageTemplate, $databaseName): string
     {

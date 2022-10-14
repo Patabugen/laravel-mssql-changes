@@ -4,6 +4,7 @@ namespace Patabugen\MssqlChanges\Tests;
 
 use Patabugen\MssqlChanges\Actions\ListTableChanges;
 use Patabugen\MssqlChanges\Change;
+use Patabugen\MssqlChanges\Models\Contact;
 use Patabugen\MssqlChanges\Table;
 
 class ShowChangesTest extends TestCase
@@ -13,12 +14,14 @@ class ShowChangesTest extends TestCase
         // Todo: Make a change to check it's there
         // Maybe get version, then pass version to ListTableChanges
         $table = Table::create('Contacts');
-        $changes = ListTableChanges::run($table);
 
+        $this->assertCount(0, ListTableChanges::run($table));
+        Contact::factory()->create();
+
+        $changes = ListTableChanges::run($table);
         $this->assertCount(1, $changes);
         $this->assertContainsOnlyInstancesOf(Change::class, $changes);
         // Assert some of the changes are from one table, and the others from another.
-        $this->markTestIncomplete();
     }
 
     public function test_we_can_list_table_changes_from_artisan()

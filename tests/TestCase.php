@@ -14,15 +14,19 @@ abstract class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->runLaravelMigrations();
-        $this->loadMigrationsFrom(__DIR__.'/fixtures/database/migrations');
-
-        $this->enableChangeTracking();
+        EnableTableChangeTracking::run('Contacts');
+        // $this->enableChangeTracking();
 
         Factory::guessFactoryNamesUsing(
             fn (string $modelName) => 'Patabugen\\MssqlChanges\\Tests\\Fixtures\Database\\Factories\\'.class_basename($modelName)
                 .'Factory'
         );
+    }
+
+    protected function defineDatabaseMigrations()
+    {
+        $this->artisan('migrate:fresh')->run();
+        $this->loadMigrationsFrom(__DIR__.'/fixtures/database/migrations');
     }
 
     protected function getPackageProviders($app)
@@ -33,20 +37,7 @@ abstract class TestCase extends Orchestra
         ];
     }
 
-    public function getEnvironmentSetUp($app)
-    {
-        $this->setDatabaseConfig();
-
-        $this->enableChangeTracking();
-    }
-
-    private function enableChangeTracking()
-    {
-        EnableDatabaseChangeTracking::run();
-        EnableTableChangeTracking::run('Contacts');
-    }
-
-    public function setDatabaseConfig()
+    public function defineEnvironment($app)
     {
         config()->set('database.connections.default', [
             'driver' => env('DB_DRIVER', 'sqlsrv'),
@@ -68,4 +59,11 @@ abstract class TestCase extends Orchestra
             ],
         ]);
     }
+
+    private function enableChangeTracking()
+    {
+        // EnableDatabaseChangeTracking::run();
+        // EnableTableChangeTracking::run('Contacts');
+    }
+
 }
