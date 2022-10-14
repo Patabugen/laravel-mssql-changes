@@ -59,6 +59,32 @@ See the `asCommand` method on each action for real-life examples of calling the 
     });
 ```
 
+### See changed data using a reference database 
+
+SQLServer Change Tracking tracks whether a change has happened, but not the data itself. (For that you need Change Data Capture, which is outside the scope of this package).
+
+To get an idea of what has changed you can use a reference database, which is a copy of your database from before any changes were made.
+
+The package will look for a row with the same primary key in a table of the same name, and give you that result alongside the current value.
+
+> Hint: The reference database will only contain a value as it was when you copied the database and won't show in-between changes. This is a bit of a convenience feature to save you looking it up manually, SQLServer has not tracked the actual data change so we can't display it for certain.  
+
+```php
+    use Patabugen\MssqlChanges\Actions\ListTableChanges;
+    use Patabugen\SqlChanges\Table;
+    use Patabugen\SqlChanges\Change;
+    $table = Table::create('Contacts');
+    /** @var Illuminate\Support\Collection $changes */
+    $changes = ListTableChanges::make()
+        ->handle($table);
+    $changes->each(function(Change $change) {
+        $changedColumns = $change->getChangedColumns();
+        foreach ($changedColumns as $changedColumn) {
+                    
+        }        
+    });
+```
+
 ## Usage - Artisan
 
 __Note: This package is in it's early stages, these commands may not work yet.__
