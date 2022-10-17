@@ -43,9 +43,9 @@ class ListTableChangesTest extends TestCase
 
         $version = GetVersion::run();
 
-        $headers = [ 'Table', 'Primary Key', 'Columns Changed', 'Change Version' ];
+        $headers = ['Table', 'Primary Key', 'Columns Changed', 'Change Version'];
         $rows = [
-            [ 'Contacts', '1', 'Firstname', $version ]
+            ['Contacts', '1', 'Firstname', $version],
         ];
 
         $this->artisan('mssql:list-table-changes', ['table' => 'Contacts', '--from' => $version])

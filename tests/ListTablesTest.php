@@ -42,19 +42,19 @@ class ListTablesTest extends TestCase
     {
         $this->artisan('mssql:list-tables')
             ->expectsTable([
-                'Name', 'Column Tracking Status'
-            ],[
-                [ 'Addresses', 'Enabled' ],
-                [ 'Contacts', 'Enabled' ],
+                'Name', 'Column Tracking Status',
+            ], [
+                ['Addresses', 'Enabled'],
+                ['Contacts', 'Enabled'],
             ])
             ->expectsOutputToContain('2 tables have change tracking enabled');
 
         DisableTableChangeTracking::run('Contacts');
         $this->artisan('mssql:list-tables')
             ->expectsTable([
-                'Name', 'Column Tracking Status'
-            ],[
-                [ 'Addresses', 'Enabled' ],
+                'Name', 'Column Tracking Status',
+            ], [
+                ['Addresses', 'Enabled'],
             ])
             ->expectsOutputToContain('1 tables have change tracking enabled');
     }

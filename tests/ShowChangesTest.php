@@ -3,7 +3,6 @@
 namespace Patabugen\MssqlChanges\Tests;
 
 use Patabugen\MssqlChanges\Actions\GetVersion;
-use Patabugen\MssqlChanges\Actions\ListTableChanges;
 use Patabugen\MssqlChanges\Actions\ShowChanges;
 use Patabugen\MssqlChanges\Change;
 use Patabugen\MssqlChanges\Models\Address;
@@ -37,16 +36,16 @@ class ShowChangesTest extends TestCase
         $address1 = Address::factory()->create();
         $address2 = Address::factory()->create();
 
-        $contact1->update([ 'Firstname' => fake()->firstName()]);
+        $contact1->update(['Firstname' => fake()->firstName()]);
         $version = GetVersion::run(); // Get the version we reached when we made $contact1
-        $address1->update([ 'first_line' => fake()->address()]);
-        $address2->update([ 'first_line' => fake()->address()]);
+        $address1->update(['first_line' => fake()->address()]);
+        $address2->update(['first_line' => fake()->address()]);
 
-        $headers = [ 'Table', 'Primary Key', 'Columns Changed', 'Change Version' ];
+        $headers = ['Table', 'Primary Key', 'Columns Changed', 'Change Version'];
         $rows = [
-            [ 'Contacts', '1', 'Firstname', $version ],
-            [ 'Addresses', '1', 'first_line', $version + 1 ],
-            [ 'Addresses', '2', 'first_line', $version + 2 ],
+            ['Contacts', '1', 'Firstname', $version],
+            ['Addresses', '1', 'first_line', $version + 1],
+            ['Addresses', '2', 'first_line', $version + 2],
         ];
 
         $this->artisan('mssql:show-changes', ['--from' => $version])

@@ -2,12 +2,8 @@
 
 namespace Patabugen\MssqlChanges\Tests;
 
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Patabugen\MssqlChanges\Actions\GetVersion;
-use Patabugen\MssqlChanges\Actions\ListTableChanges;
-use Patabugen\MssqlChanges\Change;
 use Patabugen\MssqlChanges\Models\Contact;
-use Patabugen\MssqlChanges\Table;
 
 class GetVersionTest extends TestCase
 {
@@ -20,7 +16,6 @@ class GetVersionTest extends TestCase
 
     public function test_we_can_get_version_from_artisan()
     {
-
         $version = GetVersion::run();
         Contact::factory()->create();
 

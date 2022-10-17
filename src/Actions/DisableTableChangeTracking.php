@@ -42,7 +42,6 @@ class DisableTableChangeTracking extends BaseAction
         return $this->return($this->messages[1], $tableName);
     }
 
-
     private function return(string $messageTemplate, $databaseName): string
     {
         $message = sprintf($messageTemplate, $databaseName);
