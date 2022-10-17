@@ -21,7 +21,7 @@ class Change
         Table $table,
         string|int $primaryKey,
         string $columnName,
-        string $sysChangeVersion,
+        int $sysChangeVersion,
     ) {
         $this->connection = $connection;
         $this->primaryKey = $primaryKey;

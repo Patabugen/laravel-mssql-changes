@@ -10,11 +10,9 @@ use Illuminate\Support\Str;
 
 class Database implements Arrayable
 {
-    private ConnectionInterface $connection;
+    public ConnectionInterface $connection;
 
     public string $name;
-
-    private Collection $tables;
 
     public int $retentionPeriodUnits;
 

@@ -18,7 +18,7 @@ class ListDatabases extends BaseAction
             ->get()
             ->map(function ($item) {
                 return new Database(
-                    $item->name, $item->retention_period_units, $item->retention_period_units_desc
+                    $this->connection(), $item->name, $item->retention_period_units, $item->retention_period_units_desc
                 );
             });
 
