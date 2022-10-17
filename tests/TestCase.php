@@ -14,8 +14,7 @@ abstract class TestCase extends Orchestra
     {
         parent::setUp();
 
-        EnableTableChangeTracking::run('Contacts');
-        // $this->enableChangeTracking();
+        $this->enableChangeTracking();
 
         Factory::guessFactoryNamesUsing(
             fn (string $modelName) => 'Patabugen\\MssqlChanges\\Tests\\Fixtures\Database\\Factories\\'.class_basename($modelName)
@@ -60,10 +59,15 @@ abstract class TestCase extends Orchestra
         ]);
     }
 
+    /**
+     * Enable change-tracking on our test database and tables. We can use the
+     * DisableTableChangeTracking in tests to disable them if needed.
+     */
     private function enableChangeTracking()
     {
-        // EnableDatabaseChangeTracking::run();
-        // EnableTableChangeTracking::run('Contacts');
+        EnableDatabaseChangeTracking::run();
+        EnableTableChangeTracking::run('Contacts');
+        EnableTableChangeTracking::run('Addresses');
     }
 
 }
