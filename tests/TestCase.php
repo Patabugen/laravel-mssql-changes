@@ -69,5 +69,4 @@ abstract class TestCase extends Orchestra
         EnableTableChangeTracking::run('Contacts');
         EnableTableChangeTracking::run('Addresses');
     }
-
 }
