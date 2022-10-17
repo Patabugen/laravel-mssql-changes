@@ -5,9 +5,9 @@ namespace Patabugen\MssqlChanges\Tests;
 use Patabugen\MssqlChanges\Actions\GetVersion;
 use Patabugen\MssqlChanges\Actions\ShowChanges;
 use Patabugen\MssqlChanges\Change;
-use Patabugen\MssqlChanges\Models\Address;
-use Patabugen\MssqlChanges\Models\Contact;
 use Patabugen\MssqlChanges\Table;
+use Patabugen\MssqlChanges\Tests\fixtures\Models\Address;
+use Patabugen\MssqlChanges\Tests\fixtures\Models\Contact;
 
 class ShowChangesTest extends TestCase
 {

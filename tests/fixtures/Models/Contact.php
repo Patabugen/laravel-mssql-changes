@@ -1,6 +1,6 @@
 <?php
 
-namespace Patabugen\MssqlChanges\Models;
+namespace Patabugen\MssqlChanges\Tests\fixtures\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,5 +19,5 @@ class Contact extends Model
 
     public $table = 'Contacts';
 
-    public $guarded = [ ];
+    public $guarded = [];
 }

@@ -3,7 +3,7 @@
 namespace Patabugen\MssqlChanges\Tests;
 
 use Patabugen\MssqlChanges\Actions\GetVersion;
-use Patabugen\MssqlChanges\Models\Contact;
+use Patabugen\MssqlChanges\Tests\fixtures\Models\Contact;
 
 class GetVersionTest extends TestCase
 {

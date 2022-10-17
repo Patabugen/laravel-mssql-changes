@@ -3,7 +3,7 @@
 namespace Patabugen\MssqlChanges\Tests\Fixtures\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Patabugen\MssqlChanges\Models\Contact;
+use Patabugen\MssqlChanges\Tests\fixtures\Models\Contact;
 
 class ContactFactory extends Factory
 {
