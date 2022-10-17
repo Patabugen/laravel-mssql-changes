@@ -2,7 +2,7 @@
 
 All notable changes to `laravel-mssql-changes` will be documented in this file.
 
-## Unreleased Changes
+## 1.1.0 - 2022-10-17
 
  - Sort ShowChanges output by Change Version (without grouping by Table)
  - Create a test database for use with tests
