@@ -19,5 +19,5 @@ class Contact extends Model
 
     public $table = 'Contacts';
 
-    public $guarded = [ ];
+    public $guarded = [];
 }
