@@ -11,5 +11,7 @@ class Contact extends Model
 
     public $timestamps = false;
 
+    public $primaryKey = 'ContactID';
+
     public $table = 'Contacts';
 }

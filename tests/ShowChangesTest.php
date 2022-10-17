@@ -24,7 +24,7 @@ class ShowChangesTest extends TestCase
         // Assert some of the changes are from one table, and the others from another.
     }
 
-    public function test_we_can_list_table_changes_from_artisan()
+    public function test_we_can_show_all_changes_from_artisan()
     {
         /**
          * Because we're not creating a test database we can't properly use
