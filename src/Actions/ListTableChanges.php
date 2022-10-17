@@ -72,11 +72,13 @@ class ListTableChanges extends BaseAction
             return;
         }
         $headers = array_keys($changes->first()->toArray());
+        $rows = $changes->map(function (Change $table) {
+            return $table->toArray();
+        })->toArray();
+
         $command->table(
             $headers,
-            $changes->map(function (Change $table) {
-                return $table->toArray();
-            })->toArray(),
+            $rows,
         );
 
         $command->info('Table '.$table->fullName().' has '.count($changes).' changes');

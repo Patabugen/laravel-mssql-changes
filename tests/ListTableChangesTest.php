@@ -31,31 +31,26 @@ class ListTableChangesTest extends TestCase
     public function test_we_can_list_table_changes_from_artisan()
     {
         $table = Table::create('Contacts');
-        $changes = ListTableChanges::run($table);
-        $this->assertEmpty($changes);
 
+        // We're going to test just changing a single field - so first let's create
+        // the contact.
         $contact = Contact::create();
-        $version = GetVersion::run();
 
-        // Use the version to filter out the create, and only show the
-        // update below.
-        $changes = ListTableChanges::make()
-            ->fromVersion($version)
-            ->handle($table);
-
+        // Then we'll make a single column change and use GetVersion to filter
+        // out the previous ones.
         $contact->Firstname = fake()->firstName;
         $contact->save();
-        $this->withoutMockingConsoleOutput();
-        $command = $this->artisan('mssql:list-table-changes Contacts');
-        ray($command);
-        // ->assertSuccessful();
 
-        $command->expectsTable(
-                [ 'Table', 'Primary Key', 'Columns Changed', 'Change Version' ],
-                [
-                    [ 'Contacts', '1', 'Firstname', $version + 1 ]
-                ]
-            )
-            ->expectsOutputToContain('Table Contacts has 1 changes');
+        $version = GetVersion::run();
+
+        $headers = [ 'Table', 'Primary Key', 'Columns Changed', 'Change Version' ];
+        $rows = [
+            [ 'Contacts', '1', 'Firstname', $version ]
+        ];
+
+        $this->artisan('mssql:list-table-changes', ['table' => 'Contacts', '--from' => $version])
+            ->assertSuccessful()
+            ->expectsTable($headers, $rows)
+            ->expectsOutputToContain('Table '.$table->fullName().' has 1 change');
     }
 }

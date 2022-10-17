@@ -50,12 +50,11 @@ class ShowChanges extends BaseAction
             return;
         }
         $headers = array_keys($changes->first()->toArray());
-        $command->table(
-            $headers,
-            $changes->map(function (Change $table) {
-                return $table->toArray();
-            })->toArray(),
-        );
+        $rows = $changes->map(function (Change $table) {
+            return $table->toArray();
+        })->toArray();
+
+        $command->table($headers, $rows);
         $command->info(
             count($changes).' '.Str::plural('change', $changes).' found'
         );
