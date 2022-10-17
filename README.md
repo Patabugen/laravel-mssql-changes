@@ -71,6 +71,9 @@ The default database from your config will be used, or set environment variable 
 ### Enable change tracking for a table
 `artisan mssql:enable-table-change-tracking {TableName}`
 
+### Disable change tracking for a table
+`artisan mssql:disable-table-change-tracking {TableName}`
+
 ### Lists all changes in all tables.
 `artisan mssql:show-changes`
 
