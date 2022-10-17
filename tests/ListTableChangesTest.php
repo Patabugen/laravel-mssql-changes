@@ -51,11 +51,11 @@ class ListTableChangesTest extends TestCase
         // ->assertSuccessful();
 
         $command->expectsTable(
-                [ 'Table', 'Primary Key', 'Columns Changed', 'Change Version' ],
-                [
-                    [ 'Contacts', '1', 'Firstname', $version + 1 ]
-                ]
-            )
+            ['Table', 'Primary Key', 'Columns Changed', 'Change Version'],
+            [
+                ['Contacts', '1', 'Firstname', $version + 1],
+            ]
+        )
             ->expectsOutputToContain('Table Contacts has 1 changes');
     }
 }
