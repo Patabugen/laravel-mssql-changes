@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class EnableTableChangeTracking extends BaseAction
 {
-    public string $commandSignature = 'mssql:enable-table-change-tracking {table}';
+    public string $commandSignature = 'mssql:enable-table-change-tracking {table?} {--all}';
 
     private array $messages = [
         1 => 'Change Tracking enabled for table %s',
@@ -52,6 +52,14 @@ class EnableTableChangeTracking extends BaseAction
 
     public function asCommand(Command $command): void
     {
+        $tables = [];
+        if ($command->option('all')) {
+            $tables = $this->connection()->select('SHOW TABLES')->get();
+        } else {
+            $tables = [$command->argument('table')];
+        }
+        ray($tables);
+        dd();
         $command->info($this->handle(
             $command->argument('table')
         ));
