@@ -46,12 +46,13 @@ class EnableTableChangeTracking extends BaseAction
             $tables = ListTables::run();
         } else {
             $tables = collect([
-                Table::create($command->argument('table'))
+                Table::create($command->argument('table')),
             ]);
         }
-        $tables->each(function(Table $table) use ($command) {
+        $tables->each(function (Table $table) use ($command) {
             if (empty($table->primaryKeyName)) {
                 $command->warn($table->name.' cannot have Change Tracking enabled because it does not have a Primary Key');
+
                 return;
             }
             $command->info($this->handle($table));
