@@ -22,7 +22,7 @@ class ListTables extends BaseAction
             ->table('sys.tables')
             ->select(['sys.tables.*', 'sys.change_tracking_tables.is_track_columns_updated_on'])
             // Link the change-tracking system info to the tables list
-            ->leftJoin('sys.change_tracking_tables', 'sys.tables.object_id', 'sys.change_tracking_tables.object_id',)
+            ->leftJoin('sys.change_tracking_tables', 'sys.tables.object_id', 'sys.change_tracking_tables.object_id')
             ->orderBy('sys.tables.name')
             ->when(! empty($this->tableFilter), fn ($query) => $query->whereIn('sys.tables.name', $this->tableFilter));
 
@@ -33,7 +33,7 @@ class ListTables extends BaseAction
                 ? ''
                 : $primaryKey->pluck('COLUMN_NAME')->join(',');
 
-            $changeTrackingEnabled = $item->is_track_columns_updated_on == "1";
+            $changeTrackingEnabled = $item->is_track_columns_updated_on == '1';
 
             $columns = $this->connection()
                 ->table('INFORMATION_SCHEMA.COLUMNS')
