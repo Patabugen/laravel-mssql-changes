@@ -9,6 +9,7 @@ use Patabugen\MssqlChanges\Table;
 class ListTables extends BaseAction
 {
     public array $tableFilter = [];
+
     public bool $onlyTrackingEnabled = false;
 
     /**
@@ -65,6 +66,7 @@ class ListTables extends BaseAction
     public function onlyWithTracking($onlyTrackingEnabled = true)
     {
         $this->onlyTrackingEnabled = $onlyTrackingEnabled;
+
         return $this;
     }
 
