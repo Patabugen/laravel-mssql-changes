@@ -9,6 +9,7 @@ use Patabugen\MssqlChanges\Table;
 class ListTables extends BaseAction
 {
     public array $tableFilter = [];
+    public bool $onlyTrackingEnabled = false;
 
     /**
      * Returns a collection of Table objects for any table which has Change Tracking
@@ -24,6 +25,7 @@ class ListTables extends BaseAction
             // Link the change-tracking system info to the tables list
             ->leftJoin('sys.change_tracking_tables', 'sys.tables.object_id', 'sys.change_tracking_tables.object_id',)
             ->orderBy('sys.tables.name')
+            ->when($this->onlyTrackingEnabled, fn ($query) => $query->where('sys.change_tracking_tables.is_track_columns_updated_on', '=', '1'))
             ->when(! empty($this->tableFilter), fn ($query) => $query->whereIn('sys.tables.name', $this->tableFilter));
 
         return $query->get()->mapWithKeys(function ($item) {
@@ -57,6 +59,12 @@ class ListTables extends BaseAction
     {
         $this->tableFilter = $tableFilter;
 
+        return $this;
+    }
+
+    public function onlyWithTracking($onlyTrackingEnabled = true)
+    {
+        $this->onlyTrackingEnabled = $onlyTrackingEnabled;
         return $this;
     }
 

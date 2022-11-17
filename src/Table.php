@@ -52,10 +52,6 @@ class Table
     {
         $foundTables = ListTables::make()->setTableFilter([$name])->handle();
         throw_if(
-            $foundTables->isEmpty(),
-            "A table named '{$name}' with tracking enabled was not found"
-        );
-        throw_if(
             $foundTables->count() > 1,
             "More than one table was found matching '{$name}'"
         );
