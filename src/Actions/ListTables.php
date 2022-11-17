@@ -8,8 +8,6 @@ use Patabugen\MssqlChanges\Table;
 
 class ListTables extends BaseAction
 {
-    public string $commandSignature = 'mssql:list-tables';
-
     public array $tableFilter = [];
 
     /**
@@ -21,15 +19,21 @@ class ListTables extends BaseAction
     public function handle(): Collection
     {
         $query = $this->connection()
-            ->table('sys.change_tracking_tables')
-            ->select('sys.tables.*')
+            ->table('sys.tables')
+            ->select(['sys.tables.*', 'sys.change_tracking_tables.is_track_columns_updated_on'])
             // Link the change-tracking system info to the tables list
-            ->join('sys.tables', 'sys.change_tracking_tables.object_id', 'sys.tables.object_id')
+            ->leftJoin('sys.change_tracking_tables', 'sys.tables.object_id', 'sys.change_tracking_tables.object_id',)
             ->orderBy('sys.tables.name')
             ->when(! empty($this->tableFilter), fn ($query) => $query->whereIn('sys.tables.name', $this->tableFilter));
 
         return $query->get()->mapWithKeys(function ($item) {
-            $primaryKey = $this->connection()->select('EXEC sp_pkeys ?', [$item->name])[0]->COLUMN_NAME;
+            $primaryKey = collect($this->connection()->select('EXEC sp_pkeys ?', [$item->name]));
+
+            $primaryKey = ($primaryKey->isEmpty())
+                ? ''
+                : $primaryKey->pluck('COLUMN_NAME')->join(',');
+
+            $changeTrackingEnabled = $item->is_track_columns_updated_on == "1";
 
             $columns = $this->connection()
                 ->table('INFORMATION_SCHEMA.COLUMNS')
@@ -41,7 +45,7 @@ class ListTables extends BaseAction
                 $item->name => new Table(
                     connection: $this->connection(),
                     name: $item->name,
-                    columnTrackingEnabled: true,
+                    columnTrackingEnabled: $changeTrackingEnabled,
                     primaryKeyName: $primaryKey,
                     columns: $columns
                 ),

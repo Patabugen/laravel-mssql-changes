@@ -38,6 +38,7 @@ class Table
     {
         return [
             'Name' => $this->name,
+            'Primary Key' => $this->primaryKeyName,
             'Column Tracking Status' => $this->columnTrackingEnabled ? 'Enabled' : 'Disabled',
         ];
     }
