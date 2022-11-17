@@ -5,41 +5,30 @@ namespace Patabugen\MssqlChanges\Actions;
 use Illuminate\Console\Command;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Str;
+use Patabugen\MssqlChanges\Table;
 
 class EnableTableChangeTracking extends BaseAction
 {
-    public string $commandSignature = 'mssql:enable-table-change-tracking {table?} {--all}';
-
     private array $messages = [
         1 => 'Change Tracking enabled for table %s',
         2 => 'Change Tracking is already enabled for table %s',
     ];
 
-    public function handle(string $rawTableName): string
+    public function handle(Table $table): string
     {
-        // Some rudimentary sanitising/escaping.
-        $tableName = Str::of($rawTableName)->ascii()->wrap('[', ']');
-
-        throw_unless(
-            $this->connection()->getSchemaBuilder()->hasTable($rawTableName),
-            'Table '.$tableName.' does not exist'
-            .' in database '.$this->connection()->getDatabaseName()
-            .' at '.$this->connection()->getConfig('host')
-        );
-
         try {
             $this->connection()->unprepared(
-                'ALTER TABLE '.$tableName.' ENABLE CHANGE_TRACKING WITH (TRACK_COLUMNS_UPDATED = ON);',
+                'ALTER TABLE '.$table->name.' ENABLE CHANGE_TRACKING WITH (TRACK_COLUMNS_UPDATED = ON);',
             );
         } catch (QueryException $e) {
             if (Str::of($e->getMessage())->contains('Change tracking is already enabled for table')) {
-                return $this->return($this->messages[2], $tableName);
+                return $this->return($this->messages[2], $table->name);
             } else {
                 throw $e;
             }
         }
 
-        return $this->return($this->messages[1], $tableName);
+        return $this->return($this->messages[1], $table->name);
     }
 
     private function return(string $messageTemplate, $databaseName): string
@@ -54,14 +43,18 @@ class EnableTableChangeTracking extends BaseAction
     {
         $tables = [];
         if ($command->option('all')) {
-            $tables = $this->connection()->select('SHOW TABLES')->get();
+            $tables = ListTables::run();
         } else {
-            $tables = [$command->argument('table')];
+            $tables = collect([
+                Table::create($command->argument('table'))
+            ]);
         }
-        ray($tables);
-        dd();
-        $command->info($this->handle(
-            $command->argument('table')
-        ));
+        $tables->each(function(Table $table) use ($command) {
+            if (empty($table->primaryKeyName)) {
+                $command->warn($table->name.' cannot have Change Tracking enabled because it does not have a Primary Key');
+                return;
+            }
+            $command->info($this->handle($table));
+        });
     }
 }
