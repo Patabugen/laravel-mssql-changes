@@ -16,9 +16,10 @@ class EnableTableChangeTracking extends BaseAction
 
     public function handle(Table $table): string
     {
+        $tableName = Str::of($table->name)->ascii()->wrap('[', ']');
         try {
             $this->connection()->unprepared(
-                'ALTER TABLE '.$table->name.' ENABLE CHANGE_TRACKING WITH (TRACK_COLUMNS_UPDATED = ON);',
+                'ALTER TABLE '.$tableName.' ENABLE CHANGE_TRACKING WITH (TRACK_COLUMNS_UPDATED = ON);',
             );
         } catch (QueryException $e) {
             if (Str::of($e->getMessage())->contains('Change tracking is already enabled for table')) {
