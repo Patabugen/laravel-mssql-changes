@@ -7,9 +7,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Patabugen\MssqlChanges\Change;
 use Patabugen\MssqlChanges\Table;
+use Patabugen\MssqlChanges\Traits\HasVersionFiltersTrait;
 use Symfony\Component\Console\Helper\Table as ConsoleTable;
 use Symfony\Component\Console\Helper\TableSeparator;
-use Patabugen\MssqlChanges\Traits\HasVersionFiltersTrait;
 
 class ShowChanges extends BaseAction
 {
@@ -55,12 +55,13 @@ class ShowChanges extends BaseAction
         $table = new ConsoleTable($command->getOutput());
         $table->setHeaders(array_keys($changes->first()->toArray()));
         // Turn the changes into an array (and word-wrap the Columns list)
-        $changes = $changes->map(function (Change $tableChanges){
+        $changes = $changes->map(function (Change $tableChanges) {
             $row = $tableChanges->toArray();
             $row['Columns Changed'] = wordwrap(
                 $row['Columns Changed'],
                 config('mssql-changes.columns-changed-max-width')
             );
+
             return $row;
         });
         // Add a separator between each row to make it easier to read
