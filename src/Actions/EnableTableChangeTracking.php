@@ -43,7 +43,8 @@ class EnableTableChangeTracking extends BaseAction
     public function runAllTables()
     {
         $tables = ListTables::run();
-        return $tables->map(function(Table $table){
+
+        return $tables->map(function (Table $table) {
             return $this->handle($table);
         });
     }

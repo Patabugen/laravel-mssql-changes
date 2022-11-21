@@ -45,7 +45,8 @@ class DisableTableChangeTracking extends BaseAction
     public function runAllTables()
     {
         $tables = ListTables::run();
-        return $tables->map(function(Table $table){
+
+        return $tables->map(function (Table $table) {
             return $this->handle($table);
         });
     }
@@ -63,6 +64,7 @@ class DisableTableChangeTracking extends BaseAction
         $tables->each(function (Table $table) use ($command) {
             if (empty($table->primaryKeyName)) {
                 $command->warn($table->name.' cannot have Change Tracking enabled because it does not have a Primary Key');
+
                 return;
             }
             $command->info($this->handle($table));

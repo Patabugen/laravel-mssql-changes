@@ -4,7 +4,6 @@ namespace Patabugen\MssqlChanges\Tests;
 
 use Patabugen\MssqlChanges\Actions\DisableTableChangeTracking;
 use Patabugen\MssqlChanges\Actions\EnableTableChangeTracking;
-use Patabugen\MssqlChanges\Actions\ListTables;
 use Patabugen\MssqlChanges\Table;
 
 class DisableTableChangeTrackingTest extends TestCase
@@ -50,7 +49,6 @@ class DisableTableChangeTrackingTest extends TestCase
             $return['migrations']
         );
     }
-
 
     public function test_we_can_disable_a_table_from_artisan()
     {
