@@ -80,6 +80,8 @@ class ListTables extends BaseAction
                 return $table->toArray();
             })->toArray(),
         );
-        $command->info(count($tables).' tables have change tracking enabled');
+        $stats = $tables->countBy('columnTrackingEnabled');
+        $command->info($stats[0].' tables have change tracking disabled');
+        $command->info($stats[1].' tables have change tracking enabled');
     }
 }
