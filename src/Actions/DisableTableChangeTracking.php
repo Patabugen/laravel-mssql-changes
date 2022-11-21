@@ -42,6 +42,14 @@ class DisableTableChangeTracking extends BaseAction
         return $message;
     }
 
+    public function runAllTables()
+    {
+        $tables = ListTables::run();
+        return $tables->map(function(Table $table){
+            return $this->handle($table);
+        });
+    }
+
     public function asCommand(Command $command): void
     {
         $tables = [];

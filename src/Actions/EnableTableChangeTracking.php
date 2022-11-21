@@ -40,6 +40,14 @@ class EnableTableChangeTracking extends BaseAction
         return $message;
     }
 
+    public function runAllTables()
+    {
+        $tables = ListTables::run();
+        return $tables->map(function(Table $table){
+            return $this->handle($table);
+        });
+    }
+
     public function asCommand(Command $command): void
     {
         $tables = [];
@@ -55,7 +63,7 @@ class EnableTableChangeTracking extends BaseAction
                 $command->warn($table->name.' cannot have Change Tracking enabled because it does not have a Primary Key');
 
                 return;
-            }
+            }ray($table);
             $command->info($this->handle($table));
         });
     }
