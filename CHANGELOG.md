@@ -4,7 +4,8 @@ All notable changes to `laravel-mssql-changes` will be documented in this file.
 
 ## Unreleasd Changed
 
- - 
+ - Improve the console output of `mssql:show-changes` by word-wrapping the Columns Changed column and adding separators between rows.
+ - Added config option: MSSQL_COLUMNS_CHANGED_MAX_WIDTH to override the default Columns Changes width
 
 ## 1.2.0 - 2022-11-21
 
