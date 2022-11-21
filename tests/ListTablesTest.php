@@ -9,24 +9,30 @@ use Patabugen\MssqlChanges\Table;
 
 class ListTablesTest extends TestCase
 {
-    public function test_we_can_list_tables_with_tracking_enabled()
+    public function test_we_can_list_only_tables_with_tracking_enabled()
     {
-        DisableTableChangeTracking::run('Contacts');
-        $tables = ListTables::run();
+        // Our test starts with 3 tables, Contacts and Addresses have tracking enabled
+        // while migrations does not.
+        DisableTableChangeTracking::run(Table::create('Contacts'));
+        $tables = ListTables::make()->onlyWithTracking()->handle();
         $this->assertCount(1, $tables);
         $this->assertContainsOnlyInstancesOf(Table::class, $tables);
-        $this->assertArrayNotHasKey('Contacts', $tables);
-        $this->assertArrayHasKey('Addresses', $tables);
 
-        EnableTableChangeTracking::run('Contacts');
-        $tables = ListTables::run();
-        $this->assertCount(2, $tables);
-        $this->assertContainsOnlyInstancesOf(Table::class, $tables);
-        $this->assertArrayHasKey('Contacts', $tables);
         $this->assertArrayHasKey('Addresses', $tables);
+        $this->assertArrayNotHasKey('migrations', $tables);
+        $this->assertArrayNotHasKey('Contacts', $tables);
+
+        // Reenable tracking on Contacts and see all three tables
+        EnableTableChangeTracking::run(Table::create('Contacts'));
+        $tables = ListTables::run();
+        $this->assertCount(3, $tables);
+        $this->assertContainsOnlyInstancesOf(Table::class, $tables);
+        $this->assertArrayHasKey('Addresses', $tables);
+        $this->assertArrayHasKey('Contacts', $tables);
+        $this->assertArrayHasKey('migrations', $tables);
     }
 
-    public function test_we_can_filter_and_list_tables_with_tracking_enabled()
+    public function test_we_can_filter_list_tables()
     {
         $tables = ListTables::make()
             ->setTableFilter(['Contacts'])
@@ -42,20 +48,25 @@ class ListTablesTest extends TestCase
     {
         $this->artisan('mssql:list-tables')
             ->expectsTable([
-                'Name', 'Column Tracking Status',
+                'Name', 'Primary Key', 'Column Tracking Status',
             ], [
-                ['Addresses', 'Enabled'],
-                ['Contacts', 'Enabled'],
+                ['Addresses', 'AddressID', 'Enabled'],
+                ['Contacts', 'ContactID', 'Enabled'],
+                ['migrations', 'id', 'Disabled'],
             ])
-            ->expectsOutputToContain('2 tables have change tracking enabled');
+            ->expectsOutputToContain('2 tables have change tracking enabled')
+            ->expectsOutputToContain('1 tables have change tracking disabled');
 
-        DisableTableChangeTracking::run('Contacts');
+        DisableTableChangeTracking::run(Table::create('Contacts'));
         $this->artisan('mssql:list-tables')
             ->expectsTable([
-                'Name', 'Column Tracking Status',
+                'Name', 'Primary Key', 'Column Tracking Status',
             ], [
-                ['Addresses', 'Enabled'],
+                ['Addresses', 'AddressID', 'Enabled'],
+                ['Contacts', 'ContactID', 'Disabled'],
+                ['migrations', 'id', 'Disabled'],
             ])
-            ->expectsOutputToContain('1 tables have change tracking enabled');
+            ->expectsOutputToContain('1 tables have change tracking enabled')
+            ->expectsOutputToContain('2 tables have change tracking disabled');
     }
 }

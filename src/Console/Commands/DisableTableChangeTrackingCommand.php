@@ -7,7 +7,7 @@ use Patabugen\MssqlChanges\Actions\DisableTableChangeTracking;
 
 class DisableTableChangeTrackingCommand extends Command
 {
-    protected $signature = 'mssql:disable-table-change-tracking {table}';
+    protected $signature = 'mssql:disable-table-change-tracking {table?} {--all}';
 
     public function handle()
     {

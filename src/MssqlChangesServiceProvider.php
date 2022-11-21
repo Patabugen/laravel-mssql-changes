@@ -2,6 +2,7 @@
 
 namespace Patabugen\MssqlChanges;
 
+use Patabugen\MssqlChanges\Console\Commands\DisableTableChangeTrackingCommand;
 use Patabugen\MssqlChanges\Console\Commands\EnableDatabaseChangeTrackingCommand;
 use Patabugen\MssqlChanges\Console\Commands\EnableTableChangeTrackingCommand;
 use Patabugen\MssqlChanges\Console\Commands\GetVersionCommand;
@@ -25,6 +26,7 @@ class MssqlChangesServiceProvider extends PackageServiceProvider
                 GetVersionCommand::class,
                 EnableDatabaseChangeTrackingCommand::class,
                 EnableTableChangeTrackingCommand::class,
+                DisableTableChangeTrackingCommand::class,
             ])
             ->hasMigration(__DIR__.'/../tests/fixtures/database/create_contacts_table.php');
     }

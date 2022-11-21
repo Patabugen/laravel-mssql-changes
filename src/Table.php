@@ -38,6 +38,7 @@ class Table
     {
         return [
             'Name' => $this->name,
+            'Primary Key' => $this->primaryKeyName,
             'Column Tracking Status' => $this->columnTrackingEnabled ? 'Enabled' : 'Disabled',
         ];
     }
@@ -52,7 +53,7 @@ class Table
         $foundTables = ListTables::make()->setTableFilter([$name])->handle();
         throw_if(
             $foundTables->isEmpty(),
-            "A table named '{$name}' with tracking enabled was not found"
+            "A table named '{$name}' was not found"
         );
         throw_if(
             $foundTables->count() > 1,

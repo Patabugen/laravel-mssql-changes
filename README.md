@@ -24,7 +24,8 @@ You can publish the config file with:
 ```bash
 php artisan vendor:publish --tag="mssql-changes-config"
 ```
-
+## Usage
+The package provides artisan commands as well as a programmatic interface.
 ## Usage - PHP
 Features are provided by Actions, which are used by Artisan commands to give us CLI access.
 
@@ -66,7 +67,7 @@ __Note: This package is in it's early stages, these commands may not work yet.__
 The default database from your config will be used, or set environment variable `MSSQL_CHANGES_CONNECTION` to the name of the connection to use.
 
 ### Enable change tracking for the database
-`artisan mssql:enable-change-tracking`
+`artisan mssql:enable-database-change-tracking`
 
 ### Enable change tracking for a table
 `artisan mssql:enable-table-change-tracking {TableName}`

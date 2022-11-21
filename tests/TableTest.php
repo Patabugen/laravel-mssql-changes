@@ -8,7 +8,7 @@ class TableTest extends TestCase
 {
     public function test_error_thrown_if_creating_invalid_table()
     {
-        $this->expectExceptionMessage("A table named 'not-a-real-table' with tracking enabled was not found");
+        $this->expectExceptionMessage("A table named 'not-a-real-table' was not found");
         Table::create('not-a-real-table');
     }
 

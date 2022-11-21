@@ -7,6 +7,7 @@ use Orchestra\Testbench\TestCase as Orchestra;
 use Patabugen\MssqlChanges\Actions\EnableDatabaseChangeTracking;
 use Patabugen\MssqlChanges\Actions\EnableTableChangeTracking;
 use Patabugen\MssqlChanges\MssqlChangesServiceProvider;
+use Patabugen\MssqlChanges\Table;
 
 abstract class TestCase extends Orchestra
 {
@@ -66,7 +67,7 @@ abstract class TestCase extends Orchestra
     private function enableChangeTracking()
     {
         EnableDatabaseChangeTracking::run();
-        EnableTableChangeTracking::run('Contacts');
-        EnableTableChangeTracking::run('Addresses');
+        EnableTableChangeTracking::run(Table::create('Contacts'));
+        EnableTableChangeTracking::run(Table::create('Addresses'));
     }
 }

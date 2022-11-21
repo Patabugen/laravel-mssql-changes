@@ -20,6 +20,7 @@ class ShowChanges extends BaseAction
     public function handle(): Collection
     {
         $tables = ListTables::make()
+            ->onlyWithTracking()
             ->setTableFilter($this->tableFilter)
             ->handle();
 
