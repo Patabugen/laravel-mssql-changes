@@ -2,6 +2,12 @@
 
 All notable changes to `laravel-mssql-changes` will be documented in this file.
 
+## Unreleasd Changed
+
+ - Added: Tests for Enable and Disable tables
+ - Fixed: Output of ListTables to count Enabled and Disabled tests
+ - Fixed: Put basic sanitising of table names back into EnableTable
+
 ## 1.2
  
  - Corrected typo in docs
