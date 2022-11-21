@@ -49,7 +49,8 @@ class ListTableChanges extends BaseAction
             }
 
             // Support composite primary keys
-            $primaryKey = Str::of($table->primaryKeyName)->explode(',')->map(fn($key) => $item->$key)->join(',');
+            $primaryKey = Str::of($table->primaryKeyName)->explode(',')->map(fn ($key) => $item->$key)->join(',');
+
             return new Change(
                 connection: $this->connection(),
                 primaryKey: $primaryKey,
