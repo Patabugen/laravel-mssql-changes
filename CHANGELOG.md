@@ -4,14 +4,18 @@ All notable changes to `laravel-mssql-changes` will be documented in this file.
 
 ## Unreleasd Changed
 
+ - 
+
+## 1.2.0 - 2022-11-21
+
+This update contains a breaking change, but since the library is brand new and nobody else is using it I'm not bumping the Major number.
+
+ - Breaking: Enable and Disable table `handle` commands require a Table object, not a string
+ - Corrected typo in docs
+ - Add --all command to enable-table-change-tracking command
  - Added: Tests for Enable and Disable tables
  - Fixed: Output of ListTables to count Enabled and Disabled tests
  - Fixed: Put basic sanitising of table names back into EnableTable
-
-## 1.2
- 
- - Corrected typo in docs
- - Add --all command to enable-table-change-tracking command
 
 ## 1.1.0 - 2022-10-17
 
