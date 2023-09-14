@@ -1,6 +1,6 @@
 <?php
 
-namespace  Patabugen\MssqlChanges\Actions;
+namespace Patabugen\MssqlChanges\Actions;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;

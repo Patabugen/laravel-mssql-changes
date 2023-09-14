@@ -15,8 +15,6 @@ class ListTables extends BaseAction
     /**
      * Returns a collection of Table objects for any table which has Change Tracking
      * enabled. Does not include tables with tracking disabled.
-     *
-     * @return Collection
      */
     public function handle(): Collection
     {
